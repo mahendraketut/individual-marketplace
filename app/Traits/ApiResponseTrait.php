@@ -17,7 +17,14 @@ trait ApiResponseTrait
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data' => $data
+            'data' => $data,
+            'meta' => [
+                'total data' => count($data),
+                'memory used' => memory_get_usage() . ' bytes',
+                'IP address' => request()->ip(),
+                'time taken' => round(microtime(true) - LARAVEL_START, 2) . ' seconds',
+                'user agent' => request()->userAgent()
+            ]
         ], $status);
     }
 

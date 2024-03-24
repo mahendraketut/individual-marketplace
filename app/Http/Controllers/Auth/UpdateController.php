@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Traits\ApiResponseTrait;
+use App\Traits\HandlesImageUploads;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class UpdateController extends Controller
 {
-    use ApiResponseTrait;
+    use ApiResponseTrait, HandlesImageUploads;
     /**
      * Update the specified user in the database.
      * @param UpdateAccountRequest $request
@@ -26,17 +27,16 @@ class UpdateController extends Controller
             $user->update($request->except('image'));
 
             if ($request->hasFile('image')) {
-                if ($user->image) {
-                    Storage::delete($user->image->url);
-                    $user->image->delete();
+                // store the image in the storage folder using Handle Image Uploads trait
+                $imageNames = $this->updateImages($request->file('image'), 'public/images', $user->image->url);
+                // create a new image record in the database and associate it with the user
+                if (count($imageNames) === 1) {
+                    $user->image()->update(['url' => $imageNames[0]]);
+                } else {
+                    foreach ($imageNames as $imageName) {
+                        $user->image()->update(['url' => $imageName]);
+                    }
                 }
-
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->extension();
-                $path = $image->storeAs('images', $imageName, 'public');
-                $user->image()->create([
-                    'url' => $path
-                ]);
             }
             return $this->successResponse($user, 'User updated successfully');
         }

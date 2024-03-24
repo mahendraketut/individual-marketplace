@@ -45,11 +45,11 @@ class BrandController extends Controller
             // check if the user uploaded an image
             if ($request->hasFile('image')) {
                 // store the image in the storage folder using Handle Image Uploads trait
-                $imageName = $this->storeImage($request->file('image'));
+                $imageNames = $this->storeImage($request->file('image'));
                 // create a new image record in the database and associate it with the brand
-                $brand->image()->create([
-                    'url' => $imageName
-                ]);
+                foreach ($imageNames as $imageName) {
+                    $brand->image()->create(['url' => $imageName]);
+                }
             }
 
             // return a success response
@@ -96,11 +96,11 @@ class BrandController extends Controller
             // check if the user uploaded an image
             if ($request->hasFile('image')) {
                 // store the image in the storage folder using Handle Image Uploads trait
-                $imageName = $this->updateImage($request->file('image'), 'public/images', $brand->image->url);
+                $imageNames = $this->updateImage($request->file('image'), 'public/images', $brand->image->url);
                 // update the image record in the database
-                $brand->image()->update([
-                    'url' => $imageName
-                ]);
+                foreach ($imageNames as $imageName) {
+                    $brand->image()->update(['url' => $imageName]);
+                }
             }
 
             // return a success response

@@ -10,8 +10,7 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-    use ApiResponseTrait;
-    use HandlesImageUploads;
+    use ApiResponseTrait, HandlesImageUploads;
     /**
      * Register a new user to the database.
      * @param StoreAccountRequest $request
@@ -28,10 +27,11 @@ class RegisterController extends Controller
 
             // check if the user uploaded an image and save it in the storage folder
             if ($request->hasFile('image')) {
-                $imageName = $this->storeImage($request->file('image'));
-                $user->image()->create([
-                    'url' => $imageName
-                ]);
+                $imageNames = $this->storeImage($request->file('image'));
+                // create a new image record in the database and associate it with the user
+                foreach ($imageNames as $imageName) {
+                    $user->image()->create(['url' => $imageName]);
+                }
             }
 
             // create a token for the user
