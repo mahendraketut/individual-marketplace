@@ -11,8 +11,7 @@ use App\Traits\HandlesImageUploads;
 
 class BrandController extends Controller
 {
-    use ApiResponseTrait;
-    use HandlesImageUploads;
+    use ApiResponseTrait, HandlesImageUploads;
     /**
      * Display a listing of the resource.
      */
