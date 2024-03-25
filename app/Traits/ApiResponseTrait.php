@@ -19,7 +19,6 @@ trait ApiResponseTrait
             'message' => $message,
             'data' => $data,
             'meta' => [
-                'total data' => count($data),
                 'memory used' => memory_get_usage() . ' bytes',
                 'IP address' => request()->ip(),
                 'time taken' => round(microtime(true) - LARAVEL_START, 2) . ' seconds',

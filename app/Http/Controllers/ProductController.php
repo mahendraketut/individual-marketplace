@@ -21,33 +21,33 @@ class ProductController extends Controller
             $products = Product::with('images', 'category', 'brand', 'user');
 
             // check if the user is authenticated
-            if (auth()->check()) {
+            if (auth("sanctum")->check()) {
                 // get all product that associated with the authenticated user
-                $products = $products->where('user_id', auth()->id());
+                $products = $products->where('user_id', auth("sanctum")->id());
             }
 
             // check if the user is searching for a product
-            if ($request->has('search') && $request->search !== null) {
+            if ($request->has('search')) {
                 $products = $products->where('name', 'like', '%' . $request->search . '%');
             }
 
             // check if the user is filtering by category
-            if ($request->has('category') && $request->category !== null) {
+            if ($request->has('category')) {
                 $products = $products->where('category_id', $request->category);
             }
 
             // check if the user is filtering by brand
-            if ($request->has('brand') && $request->brand !== null) {
+            if ($request->has('brand')) {
                 $products = $products->where('brand_id', $request->brand);
             }
 
             // check if the user is filtering by price range
-            if ($request->has('min_price') && $request->min_price !== null && $request->has('max_price') && $request->max_price !== null) {
+            if ($request->has('min_price') && $request->has('max_price')) {
                 $products = $products->whereBetween('price', [$request->min_price, $request->max_price]);
             }
 
             // check if the user is sorting the products by name, and price in ascending or descending
-            if ($request->has('sort_by') && $request->sort_by !== null) {
+            if ($request->has('sort_by')) {
                 $sortOrder = $request->has('sort_order') ? $request->sort_order : 'asc';
                 $products = $products->orderBy($request->sort_by, $sortOrder);
             }
