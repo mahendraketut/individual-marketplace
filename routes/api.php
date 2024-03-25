@@ -33,6 +33,9 @@ Route::prefix('v1')->group(function () {
     // Routes for public users
     Route::get('/products_all', 'App\Http\Controllers\ProductController@index')->name('products.all');  // get all products
 
+    // Routes for public data
+    Route::get('/images/{image}', 'App\Http\Controllers\ImageController@show')->name('images.show');
+
     Route::middleware('auth:sanctum')->group(function () {
         // Route for auth user
         Route::put('/update/{id}', 'App\Http\Controllers\Auth\UpdateController@update');
