@@ -31,7 +31,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
 
     // Routes for public users
-    Route::get('/products_all', 'App\Http\Controllers\ProductController@index')->name('products.all');  // get all products
+    Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.index');  // get all products
 
     // Routes for public data
     Route::get('/images/{image}', 'App\Http\Controllers\ImageController@show')->name('images.show');
@@ -51,7 +51,7 @@ Route::prefix('v1')->group(function () {
         // Route for product
         Route::get('/products/trashed', 'App\Http\Controllers\ProductController@trashed')->name('products.trashed');
         Route::post('/products/restore/{product}', 'App\Http\Controllers\ProductController@restore')->name('products.restore');
-        Route::resource('products', 'App\Http\Controllers\ProductController');
+        Route::resource('products', 'App\Http\Controllers\ProductController')->except("index");
 
         // Route for wishlist
         Route::get('/wishlist', 'App\Http\Controllers\WishlistController@index')->name('wishlist.index');
