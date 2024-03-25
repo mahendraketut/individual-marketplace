@@ -43,4 +43,9 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    public function variantOptions(): MorphMany
+    {
+        return  $this->morphMany(VariantOption::class, 'variantable');
+    }
 }

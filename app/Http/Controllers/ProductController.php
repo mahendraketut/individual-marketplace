@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         try {
-            $products = Product::with('images', 'category', 'brand', 'user');
+            $products = Product::with('images', 'category', 'brand', 'user', 'variantOptions');
 
             // check if the user is authenticated
             if (auth("sanctum")->check()) {
@@ -94,6 +94,18 @@ class ProductController extends Controller
                 }
             }
 
+            // Check if the user is adding multiple variant options
+            if ($request->has('variant_options')) {
+                foreach ($request->variant_options as $variantName => $variantValues) {
+                    foreach ($variantValues as $variantValue) {
+                        $product->variantOptions()->create([
+                            'name_variant' => $variantName,
+                            'value_variant' => $variantValue,
+                        ]);
+                    }
+                }
+            }
+
             // return a success response
             return $this->createdResponse($product);
         } catch (\Exception $e) {
@@ -111,7 +123,7 @@ class ProductController extends Controller
             //check if the user is authenticated
             if (auth()->check()) {
                 // get the product that associated with the authenticated user
-                $product = Product::where('user_id', auth()->id())->where('slug', $slug)->with('images', 'category', 'brand', 'user')->firstOrFail();
+                $product = Product::where('user_id', auth()->id())->where('slug', $slug)->with('images', 'category', 'brand', 'user', 'variantOptions')->firstOrFail();
             } else {
                 //get the product by slug without checking the user
                 $product = Product::where('slug', $slug)->with('images', 'category', 'brand', 'user')->firstOrFail();
@@ -158,6 +170,21 @@ class ProductController extends Controller
                 }
             }
 
+            // check if the user is adding variant options
+            if ($request->has('variant_options')) {
+                // delete all the variant options associated with the product
+                $product->variantOptions()->delete();
+                // create new variant options
+                foreach ($request->variant_options as $variantName => $variantValues) {
+                    foreach ($variantValues as $variantValue) {
+                        $product->variantOptions()->create([
+                            'name_variant' => $variantName,
+                            'value_variant' => $variantValue,
+                        ]);
+                    }
+                }
+            }
+
             // return a success response
             return $this->showResponse($product);
         } catch (\Exception $e) {
@@ -191,7 +218,7 @@ class ProductController extends Controller
     {
         try {
             // get all trashed products
-            $products = Product::onlyTrashed()->with('images', 'category', 'brand', 'user')->paginate(10);
+            $products = Product::onlyTrashed()->with('images', 'category', 'brand', 'user', 'variantOptions')->paginate(10);
             // return a success response
             return $this->showResponse($products);
         } catch (\Exception $e) {

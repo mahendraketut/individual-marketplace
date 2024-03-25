@@ -31,6 +31,7 @@ class StoreProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'variant_options' => 'nullable|array',
         ];
     }
 
@@ -57,6 +58,11 @@ class StoreProductRequest extends FormRequest
             'images.*.image' => 'The image must be an image.',
             'images.*.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg.',
             'images.*.max' => 'The image may not be greater than 2048 kilobytes.',
+            'name_variant.string' => 'The name_variant field must be a string.',
+            'name_variant.max' => 'The name_variant field must not exceed 255 characters.',
+            'value_variant.string' => 'The value_variant field must be a string.',
+            'value_variant.max' => 'The value_variant field must not exceed 255 characters.',
+            'variant_options.array' => 'The variant_options field must be an array.',
         ];
     }
 
