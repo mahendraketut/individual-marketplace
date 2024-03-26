@@ -1,7 +1,7 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://devkuy.notion.site/Individual-Marketplace-API-Documentation-498194eb02f04c8f956d8bfdadc1a840#c53e784147554722aca2ddf32cf08501">Individual Marketplace Docs</a>
+<a href="https://devkuy.notion.site/Individual-Marketplace-API-Documentation-498194eb02f04c8f956d8bfdadc1a840#c53e784147554722aca2ddf32cf08501" target="blank">Individual Marketplace Docs</a>
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
