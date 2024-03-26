@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -44,8 +46,18 @@ class Product extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function variantOptions(): MorphMany
+    // public function variants(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Variant::class)->withTimestamps();
+    // }
+
+    // public function variants()
+    // {
+    //     return $this->hasMany(Variant::class);
+    // }
+
+    public function variants()
     {
-        return  $this->morphMany(VariantOption::class, 'variantable');
+        return $this->hasMany(Variant::class)->with('children');
     }
 }

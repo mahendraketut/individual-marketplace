@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VariantOption;
-use App\Http\Requests\StoreVariantOptionRequest;
-use App\Http\Requests\UpdateVariantOptionRequest;
+use App\Models\Variant;
+use App\Http\Requests\StoreVariantRequest;
+use App\Http\Requests\UpdateVariantRequest;
 
-class VariantOptionController extends Controller
+class VariantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class VariantOptionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVariantOptionRequest $request)
+    public function store(StoreVariantRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class VariantOptionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(VariantOption $variantOption)
+    public function show(Variant $variant)
     {
         //
     }
@@ -43,7 +43,7 @@ class VariantOptionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(VariantOption $variantOption)
+    public function edit(Variant $variant)
     {
         //
     }
@@ -51,7 +51,7 @@ class VariantOptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVariantOptionRequest $request, VariantOption $variantOption)
+    public function update(UpdateVariantRequest $request, Variant $variant)
     {
         //
     }
@@ -59,7 +59,7 @@ class VariantOptionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(VariantOption $variantOption)
+    public function destroy(Variant $variant)
     {
         //
     }
